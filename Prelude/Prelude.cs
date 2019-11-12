@@ -316,6 +316,15 @@ namespace Prelude
             return GCD(Abs(y), Abs(x % y));
         }
 
+        /// <summary>
+        /// The identity function, returns the value of its argument. 
+        /// </summary>
+        public static A ID<A>(this A x)
+        {
+            // id x = x
+            return x;
+        }
+
         private static bool IsEmpty<A>(IEnumerable<A> xs)
         {
             return !xs.Any();
