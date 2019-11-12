@@ -17,5 +17,12 @@ namespace Prelude.Tests
             var xs = new int[]{1, -2, 3, -4, 5};
             Assert.That(xs.Elem(6), Is.False);
         }
+
+        [Test]
+        public void ElemStringTrueTest()
+        {
+            var xs = new string[]{"foo", "bar", "baz"};
+            Assert.That(xs.Elem("foo"), Is.True);
+        }
     }
 }
