@@ -325,12 +325,29 @@ namespace Prelude
             return x;
         }
 
-        private static bool IsEmpty<A>(IEnumerable<A> xs)
+        /// <summary>
+        /// Returns all but the last element of its argument list. The argument list must have at least one element. If init is applied to an empty list an error occurs. 
+        /// </summary>
+        public static IEnumerable<A> Init<A>(this IEnumerable<A> xxs)
         {
-            return !xs.Any();
+            // init [x] = []
+            // init (x:xs) = x : init xs
+            if(!IsLongestThan(xxs, 1)) return Enumerable.Empty<A>(); else return AppendFront(Init(Tail(xxs)), Head(xxs));
         }
 
-        private static bool IsLongestThan<A>(IEnumerable<A> xs, int length)
+        private static IEnumerable<A> AppendFront<A>(IEnumerable<A> xs, A first)
+        {
+            yield return first;
+            foreach (var x in xs) yield return x;
+        }
+
+        private static bool IsEmpty<A>(IEnumerable<A> xs)
+        {
+            foreach (var x in xs) return false;
+            return true;
+        }
+
+        private static bool IsLongestThan<A>(IEnumerable<A> xs, uint length, uint minimalLength = 1)
         {
             int counter = 0;
             foreach (var item in xs)
@@ -338,6 +355,9 @@ namespace Prelude
                 if(++counter > length)
                     return true;
             }
+
+            if(counter < minimalLength)
+                throw new PreludeException($"Cannot perform this operation on the array with this length (minimalLength: {minimalLength})");
             return false;
         }
     }
