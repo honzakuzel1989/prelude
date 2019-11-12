@@ -10,7 +10,7 @@ namespace Prelude.Tests
         {
             var xs = new int[]{1, -2, 3, -4, 5};
             Func<int, int[], bool> f = (int i, int[] l) => l.Length == i;
-            Assert.That(Prelude.Flip<int, int[], bool>(f, xs, 5), Is.True);
+            Assert.That(f.Flip(xs, 5), Is.True);
         }
     }
 }
