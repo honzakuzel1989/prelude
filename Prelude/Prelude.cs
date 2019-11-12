@@ -332,25 +332,36 @@ namespace Prelude
         {
             // init [x] = []
             // init (x:xs) = x : init xs
-            if(!IsLongestThan(xxs, 1)) return Enumerable.Empty<A>(); else return AppendFront(Init(Tail(xxs)), Head(xxs));
+            if(!IsLongestThan(xxs, 1)) return Enumerable.Empty<A>(); else return AppendFront(Head(xxs), Init(Tail(xxs)));
         }
 
-        private static IEnumerable<A> AppendFront<A>(IEnumerable<A> xs, A first)
+        /// <summary>
+        /// Iterate~f~x returns the infinite list [x,~f(x),~f(f(x)),~...]. 
+        /// </summary>
+        public static IEnumerable<A> Iterate<A>(this A x, Func<A, A> f)
+        {
+            // iterate f x = x : iterate f (f x)
+            yield return x;
+            foreach (var xx in Iterate(f(x), f))
+                yield return xx;
+        }
+
+        private static IEnumerable<A> AppendFront<A>(A first, IEnumerable<A> xxs)
         {
             yield return first;
-            foreach (var x in xs) yield return x;
+            foreach (var x in xxs) yield return x;
         }
 
-        private static bool IsEmpty<A>(IEnumerable<A> xs)
+        private static bool IsEmpty<A>(IEnumerable<A> xxs)
         {
-            foreach (var x in xs) return false;
+            foreach (var _ in xxs) return false;
             return true;
         }
 
-        private static bool IsLongestThan<A>(IEnumerable<A> xs, uint length, uint minimalLength = 1)
+        private static bool IsLongestThan<A>(IEnumerable<A> xxs, uint length, uint minimalLength = 1)
         {
             int counter = 0;
-            foreach (var item in xs)
+            foreach (var _ in xxs)
             {
                 if(++counter > length)
                     return true;

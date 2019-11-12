@@ -18,7 +18,7 @@ namespace Prelude.Tests
         }
 
         [Test]
-            public void InitIntArrayTest()
+        public void InitIntArrayTest()
         {
             var xs = new int[]{1, 2, 3, 4, 5};
             Assert.That(xs.Init(), Is.EqualTo(new int[]{ 1, 2, 3, 4 }));
