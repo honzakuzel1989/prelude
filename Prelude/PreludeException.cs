@@ -1,6 +1,4 @@
-using System;
-
-namespace Prelude
+namespace System.Prelude
 {
     public class PreludeException : ApplicationException
     {

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
 
 using static System.Math;
 
-namespace Prelude
+namespace System.Prelude
 {
     /// <summary>
     /// The analogy for part of basic function library from my favorite functional language

@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace Prelude.Tests
+namespace System.Prelude.Tests
 {
     public class AllTests
     {

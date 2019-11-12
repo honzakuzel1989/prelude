@@ -1,7 +1,7 @@
 using System;
 using NUnit.Framework;
 
-namespace Prelude.Tests
+namespace System.Prelude.Test
 {
     public class FlipTests
     {
