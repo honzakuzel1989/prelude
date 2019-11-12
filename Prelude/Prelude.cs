@@ -156,6 +156,22 @@ namespace Prelude
             return !b;
         }
 
+        /// <summary>
+        /// Converts a digit character into the corresponding integer value of the digit. [Import from Data.Char] 
+        /// </summary>
+        public static int DigitToInt(this char c) 
+        {
+            // digitToInt c
+            // | isDigit c            =  fromEnum c - fromEnum '0'
+            // | c >= 'a' && c <= 'f' =  fromEnum c - fromEnum 'a' + 10
+            // | c >= 'A' && c <= 'F' =  fromEnum c - fromEnum 'A' + 10
+            // | otherwise            =  error "Char.digitToInt: not a digit"
+            return char.IsDigit(c) ? c - '0' : 
+                ((c >= 'a' && c <= 'f') ? c - 'a' + 10 : 
+                ((c >= 'A' && c <= 'F') ? c - 'A' + 10 : 
+                throw new ArgumentException("Char.DigitToInt is not digit")));
+        }
+
         private static bool IsEmpty<A>(IEnumerable<A> xs)
         {
             return !xs.Any();
