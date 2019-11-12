@@ -168,7 +168,7 @@ namespace Prelude
             return char.IsDigit(c) ? c - '0' : 
                 ((c >= 'a' && c <= 'f') ? c - 'a' + 10 : 
                 ((c >= 'A' && c <= 'F') ? c - 'A' + 10 : 
-                throw new ArgumentException("DigitToInt: not a digit")));
+                throw new PreludeException("DigitToInt: not a digit")));
         }
 
         /// <summary>
@@ -183,7 +183,16 @@ namespace Prelude
             if(n == 0) return xs;
             if(IsEmpty(xs)) return Enumerable.Empty<A>();
             if(n > 0) return xs.Skip(n);
-            throw new ArgumentException("Drop: negative argument");
+            throw new PreludeException("Drop: negative argument");
+        }
+
+        /// <summary>
+        /// Applied to an integral argument, returns True if the argument is even, and False otherwise. 
+        /// </summary>
+        public static bool Even(this int n)
+        {
+            // even n = n `rem` 2 == 0
+            return n % 2 == 0;
         }
 
         /// <summary>
@@ -223,6 +232,15 @@ namespace Prelude
         {
             // any p xs = or (map p xs)
             return Or(Map(xs, p));
+        }
+
+        /// <summary>
+        /// Applied to a predicate and a list, returns a list containing all the elements from the argument list that satisfy the predicate. 
+        /// </summary>
+        public static IEnumerable<A> Filter<A>(this IEnumerable<A> xs, Func<A, bool> p)
+        {
+            // filter p xs = [k | k <- xs, p k]
+            foreach (var x in xs) if(p(x)) yield return x;
         }
 
         private static bool IsEmpty<A>(IEnumerable<A> xs)
