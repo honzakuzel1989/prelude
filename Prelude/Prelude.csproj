@@ -5,7 +5,46 @@
     <Version>1.0.0-rc</Version>
     <Authors>Hozna Kužel</Authors>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Description>The well-tested analogy for part of very usefull Haskell's basic functions library created in C#.</Description>
+    <Description>
+      The well-tested analogy for part of very usefull Haskell's basic functions library created in C#.
+      
+        Map
+        Foldr
+        Foldr1
+        Foldl
+        Foldl1
+        Head
+        Tail
+        All
+        And
+        Or
+        Chr
+        Ord
+        Break
+        Span
+        Concat
+        ConcatMap
+        Const
+        Not
+        DigitToInt
+        Drop
+        Even
+        DropWhile
+        Elem
+        Any
+        Filter
+        Flip
+        Fst
+        Snd
+        GCD
+        ID
+        Init
+        Iterate
+        Last
+        LCM
+
+      Use only these functions can be useful for production code or like exercise for work with functions and composition of functions.
+    </Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>http://www.cse.chalmers.se/edu/course/TDA555/tourofprelude.html</PackageProjectUrl>
     <PackageIconIcon>http://www.cse.chalmers.se/edu/course/TDA555/P/Haskell-Logo.svg</PackageIconIcon>
