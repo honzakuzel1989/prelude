@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace Prelude
 {
     /// <summary>
-    /// The analogy for part of basic function library from my favorite functional laguage
+    /// The analogy for part of basic function library from my favorite functional language
     /// <see ref="http://www.cse.chalmers.se/edu/course/TDA555/tourofprelude.html"/>
     /// </summary>
     public static class Prelude
@@ -118,6 +118,12 @@ namespace Prelude
                 else return (satisfied, xs.Skip(skip));
             }
             return (satisfied, Enumerable.Empty<A>());
+        }
+
+        public static IEnumerable<A> Concat<A>(this IEnumerable<IEnumerable<A>> xs)
+        {
+            // concat xs = foldr (++) [] xs
+            return Foldr<IEnumerable<A>, IEnumerable<A>>(xs, Enumerable.Concat, Enumerable.Empty<A>());
         }
 
         /// <summary>
