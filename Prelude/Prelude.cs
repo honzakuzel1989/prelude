@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Prelude
@@ -206,6 +205,24 @@ namespace Prelude
                     yield return x;
                 }
             }
+        }
+
+        /// <summary>
+        /// Applied to a value and a list returns True if the value is in the list and False otherwise. The elements of the list must be of the same type as the value. 
+        /// </summary>
+        public static bool Elem<A>(this IEnumerable<A> xs, A x)
+        {
+            // elem x xs = any (== x) xs
+            return Any(xs, (s) => s.Equals(x));
+        }
+
+        /// <summary>
+        /// Applied to a predicate and a list, returns True if any of the elements of the list satisfy the predicate, and False otherwise. Similar to the function all. 
+        /// </summary>
+        public static bool Any<A>(this IEnumerable<A> xs, Func<A, bool> p)
+        {
+            // any p xs = or (map p xs)
+            return Or(Map(xs, p));
         }
 
         private static bool IsEmpty<A>(IEnumerable<A> xs)
