@@ -187,6 +187,27 @@ namespace Prelude
             throw new ArgumentException("Drop: negative argument");
         }
 
+        /// <summary>
+        /// Applied to a predicate and a list, removes elements from the front of the list while the predicate is satisfied. 
+        /// </summary>
+        public static IEnumerable<A> DropWhile<A>(this IEnumerable<A> xs, Func<A, bool> p)
+        {
+            // dropWhile p [] = []
+            // dropWhile p (x:xs)
+            // | p x = dropWhile p xs
+            // | otherwise = (x:xs)
+            bool take = true;
+            foreach (var x in xs)
+            {
+                if(take && p(x)) continue; 
+                else
+                {
+                    take = false;
+                    yield return x;
+                }
+            }
+        }
+
         private static bool IsEmpty<A>(IEnumerable<A> xs)
         {
             return !xs.Any();
