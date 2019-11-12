@@ -30,6 +30,16 @@ namespace Prelude
         }
 
         /// <summary>
+        /// Folds up a list, using a given binary operator and a given start value, in a left associative manner. 
+        /// </summary>
+        public static A Foldl<A, B>(this IEnumerable<B> xs, Func<A, B, A> f, A a)
+        {
+            // foldl f z [] = z
+            // foldl f z (x:xs) = foldl f (f z x) xs
+            if(IsEmpty(xs)) return a; else return Foldl(Tail(xs), f, f(a, Head(xs)));
+        }
+
+        /// <summary>
         /// Returns the first element of a non--empty list. If applied to an empty list an error results.
         /// </summary>
         public static A Head<A>(this IEnumerable<A> xs)
