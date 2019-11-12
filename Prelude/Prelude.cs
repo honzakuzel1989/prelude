@@ -120,6 +120,9 @@ namespace Prelude
             return (satisfied, Enumerable.Empty<A>());
         }
 
+        /// <summary>
+        ///  Applied to a list of lists, joins them together using the ++ operator. 
+        /// </summary>
         public static IEnumerable<A> Concat<A>(this IEnumerable<IEnumerable<A>> xs)
         {
             // concat xs = foldr (++) [] xs
