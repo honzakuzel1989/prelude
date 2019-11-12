@@ -139,6 +139,14 @@ namespace Prelude
         }
 
         /// <summary>
+        /// Creates a constant valued function which always has the value of its first argument, regardless of the value of its second argument. 
+        /// </summary>
+        public static A Const<A, B>(this A a, B b) 
+        {
+            return a;
+        }
+
+        /// <summary>
         /// Returns the logical negation of its boolean argument.
         /// </summary>
         public static bool Not(this bool b)
