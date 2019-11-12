@@ -346,6 +346,16 @@ namespace Prelude
                 yield return xx;
         }
 
+        /// <summary>
+        /// Applied to a non--empty list, returns the last element of the list. 
+        /// </summary>
+        public static A Last<A>(this IEnumerable<A> xxs)
+        {
+            // last [x] = x
+            // last (_:xs) = last xs
+            return !IsLongestThan(xxs, 1) ? xxs.ElementAt(0) : Last(Tail(xxs));
+        }
+
         private static IEnumerable<A> AppendFront<A>(A first, IEnumerable<A> xxs)
         {
             yield return first;
