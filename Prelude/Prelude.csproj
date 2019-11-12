@@ -1,7 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <PackageId>System.Prelude</PackageId>
+    <Version>1.0.0-rc</Version>
+    <Authors>Hozna Kužel</Authors>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>The well-tested analogy for part of very usefull Haskell's basic functions library created in C#.</Description>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageProjectUrl>http://www.cse.chalmers.se/edu/course/TDA555/tourofprelude.html</PackageProjectUrl>
+    <PackageIconIcon>http://www.cse.chalmers.se/edu/course/TDA555/P/Haskell-Logo.svg</PackageIconIcon>
+    <Copyright>Copyright ©2019</Copyright>
+    <NeutralLanguage>en</NeutralLanguage>
+    <RepositoryUrl>https://github.com/honzakuzel1989/prelude/</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
-
 </Project>
