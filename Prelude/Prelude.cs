@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Collections.Generic;
 
+using static System.Math;
+
 namespace Prelude
 {
     /// <summary>
@@ -297,6 +299,21 @@ namespace Prelude
         {
             // snd (_, y) = y
             return a.snd;
+        }
+
+        /// <summary>
+        /// Returns the greatest common divisor between its two integral arguments. 
+        /// </summary>
+        public static int GCD(this int x, int y)
+        {
+            // gcd 0 0 = error "Prelude.gcd: gcd 0 0 is undefined"
+            // gcd x y = gcd' (abs x) (abs y)
+            //         where
+            //             gcd' x 0 = x
+            //             gcd' x y = gcd' y (x `rem` y)
+            if(x ==0 && y == 0) throw new PreludeException("GCD: gcd 0 0 is undefined");
+            if(y == 0) return x;
+            return GCD(Abs(y), Abs(x % y));
         }
 
         private static bool IsEmpty<A>(IEnumerable<A> xs)
