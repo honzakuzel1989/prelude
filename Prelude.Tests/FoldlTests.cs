@@ -17,5 +17,12 @@ namespace Prelude.Tests
             var xs = new string("string");
             Assert.That(xs.Foldl((a, b) => a.Insert(0, b.ToString()), string.Empty), Is.EqualTo("gnirts"));
         }
+
+        [Test]
+        public void FoldlEmptyInputTest()
+        {
+            var xs = new int[]{};
+            Assert.That(xs.Foldl((a, b) => a + b, 0), Is.EqualTo(0));
+        }
     }
 }

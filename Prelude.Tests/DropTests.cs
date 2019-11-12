@@ -29,7 +29,7 @@ namespace Prelude.Tests
         public void DropExceptionThanLenghtTest()
         {
             var xs = new int[]{1, -2, 3, -4, 5};
-            Assert.That(() => xs.Drop(-10), Throws.ArgumentException);
+            Assert.That(() => xs.Drop(-10), Throws.InstanceOf<PreludeException>());
         }
     }
 }

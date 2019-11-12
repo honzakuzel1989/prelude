@@ -30,6 +30,16 @@ namespace Prelude
         }
 
         /// <summary>
+        /// Folds right over non--empty lists. 
+        /// </summary>
+        public static A Foldr1<A>(this IEnumerable<A> xs, Func<A, A, A> f)
+        {
+            // foldr1 f [x] = x
+            // foldr1 f (x:xs) = f x (foldr1 f xs)
+            if(xs.Count() == 1) return xs.ElementAt(0); else return f(Head(xs), Foldr1(xs.Tail(), f));
+        }
+
+        /// <summary>
         /// Folds up a list, using a given binary operator and a given start value, in a left associative manner. 
         /// </summary>
         public static A Foldl<A, B>(this IEnumerable<B> xs, Func<A, B, A> f, A a)
@@ -37,6 +47,15 @@ namespace Prelude
             // foldl f z [] = z
             // foldl f z (x:xs) = foldl f (f z x) xs
             if(IsEmpty(xs)) return a; else return Foldl(Tail(xs), f, f(a, Head(xs)));
+        }
+
+        /// <summary>
+        /// Folds left over non--empty lists. 
+        /// </summary>
+        public static A Foldl1<A>(this IEnumerable<A> xs, Func<A, A, A> f)
+        {
+            // foldl1 f (x:xs) = foldl f x xs
+            return Foldl(Tail(xs), f, Head(xs));
         }
 
         /// <summary>
@@ -260,6 +279,24 @@ namespace Prelude
         {
             // flip f x y = f y x            
             return f(y, x);
+        }
+
+        /// <summary>
+        /// Returns the first element of a two element tuple. 
+        /// </summary>
+        public static A Fst<A, B>(this (A fst, B snd) a)
+        {
+            // fst (x, _) = x
+            return a.fst;
+        }
+
+        /// <summary>
+        /// Returns the second element of a two element tuple. 
+        /// </summary>
+        public static B Snd<A, B>(this (A fst, B snd) a)
+        {
+            // snd (_, y) = y
+            return a.snd;
         }
 
         private static bool IsEmpty<A>(IEnumerable<A> xs)

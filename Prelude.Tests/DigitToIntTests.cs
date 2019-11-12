@@ -19,7 +19,7 @@ namespace Prelude.Tests
         [Test]
         public void DigitIsNotDigitToIntTest()
         {
-            Assert.That(() => '*'.DigitToInt(), Throws.ArgumentException);
+            Assert.That(() => '*'.DigitToInt(), Throws.InstanceOf<PreludeException>());
         }
     }
 }
