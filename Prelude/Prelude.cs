@@ -356,6 +356,17 @@ namespace Prelude
             return !IsLongestThan(xxs, 1) ? xxs.ElementAt(0) : Last(Tail(xxs));
         }
 
+        /// <summary>
+        /// Returns the least common multiple of its two integral arguments. 
+        /// </summary>
+        public static int LCM(this int x, int y)
+        {
+            // lcm _ 0 = 0
+            // lcm 0 _ = 0
+            // lcm x y = abs ((x `quot` gcd x y) * y)
+            return (x == 0 || y == 0) ? 0 : Abs((x / GCD(x, y) * y));
+        }
+
         private static IEnumerable<A> AppendFront<A>(A first, IEnumerable<A> xxs)
         {
             yield return first;
