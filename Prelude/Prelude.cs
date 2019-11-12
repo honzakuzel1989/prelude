@@ -243,6 +243,15 @@ namespace Prelude
             foreach (var x in xs) if(p(x)) yield return x;
         }
 
+        /// <summary>
+        /// Applied to a binary function, returns the same function with the order of the arguments reversed. 
+        /// </summary>
+        public static C Flip<A, B, C>(this Func<A, B, C> f, B x, A y)
+        {
+            // flip f x y = f y x            
+            return f(y, x);
+        }
+
         private static bool IsEmpty<A>(IEnumerable<A> xs)
         {
             return !xs.Any();
