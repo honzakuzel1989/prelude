@@ -169,7 +169,22 @@ namespace Prelude
             return char.IsDigit(c) ? c - '0' : 
                 ((c >= 'a' && c <= 'f') ? c - 'a' + 10 : 
                 ((c >= 'A' && c <= 'F') ? c - 'A' + 10 : 
-                throw new ArgumentException("Char.DigitToInt is not digit")));
+                throw new ArgumentException("DigitToInt: not a digit")));
+        }
+
+        /// <summary>
+        /// Applied to a number and a list, returns the list with the specified number of elements removed from the front of the list. If the list has less than the required number of elements then it returns []. 
+        /// </summary>
+        public static IEnumerable<A> Drop<A>(this IEnumerable<A> xs, int n)
+        {
+            // drop 0 xs            = xs
+            // drop _ []            = []
+            // drop n (_:xs) | n>0  = drop (n-1) xs
+            // drop _ _             = error "PreludeList.drop: negative argument"
+            if(n == 0) return xs;
+            if(IsEmpty(xs)) return Enumerable.Empty<A>();
+            if(n > 0) return xs.Skip(n);
+            throw new ArgumentException("Drop: negative argument");
         }
 
         private static bool IsEmpty<A>(IEnumerable<A> xs)
