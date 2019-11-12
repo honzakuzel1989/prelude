@@ -36,7 +36,7 @@ namespace Prelude
         {
             // foldr1 f [x] = x
             // foldr1 f (x:xs) = f x (foldr1 f xs)
-            if(xs.Count() == 1) return xs.ElementAt(0); else return f(Head(xs), Foldr1(xs.Tail(), f));
+            if(!IsLongestThan(xs, 1)) return xs.ElementAt(0); else return f(Head(xs), Foldr1(xs.Tail(), f));
         }
 
         /// <summary>
@@ -302,6 +302,17 @@ namespace Prelude
         private static bool IsEmpty<A>(IEnumerable<A> xs)
         {
             return !xs.Any();
+        }
+
+        private static bool IsLongestThan<A>(IEnumerable<A> xs, int length)
+        {
+            int counter = 0;
+            foreach (var item in xs)
+            {
+                if(++counter > length)
+                    return true;
+            }
+            return false;
         }
     }
 }
