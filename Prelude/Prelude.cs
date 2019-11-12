@@ -130,6 +130,15 @@ namespace Prelude
         }
 
         /// <summary>
+        /// Given a function which maps a value to a list, and a list of elements of the same type as the value, applies the function to the list and then concatenates the result (thus flattening the resulting list). 
+        /// </summary>
+        public static IEnumerable<B> ConcatMap<A, B>(this IEnumerable<A> xs, Func<A, IEnumerable<B>> f)
+        {
+            // concatMap f = concat . map f
+            return Concat(Map(xs, f));
+        }
+
+        /// <summary>
         /// Returns the logical negation of its boolean argument.
         /// </summary>
         public static bool Not(this bool b)

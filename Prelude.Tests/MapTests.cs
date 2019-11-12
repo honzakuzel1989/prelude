@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using static System.Math;
 
 namespace Prelude.Tests
 {
@@ -9,7 +8,7 @@ namespace Prelude.Tests
         public void MapAbsTest()
         {
             var xs = new int[]{1, -2, 3, -4, 5};
-            Assert.That(xs.Map(Abs), Is.EqualTo(new int[]{1, 2, 3, 4, 5}));
+            Assert.That(xs.Map(System.Math.Abs), Is.EqualTo(new int[]{1, 2, 3, 4, 5}));
         }
     }
 }
