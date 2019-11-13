@@ -394,13 +394,29 @@ namespace System.Prelude
 
             var (l, xs) = Break(xxs, c => c == '\n');
             yield return string.Join(string.Empty, l);
-            
+
             if(IsEmpty(xs)) yield break;
             else 
             {
                 foreach (var ll in Lines(string.Join(string.Empty, xs.Skip(1))))
                     yield return ll;
             }
+        }
+
+        /// <summary>
+        ///  Applied to two values of the same type which have an ordering defined upon them, returns the maximum of the two elements according to the operator >=. 
+        /// </summary>
+        public static A Max<A>(this A x, A y) where A : IComparable
+        {
+            return x.CompareTo(y) > 0 ? x : y;
+        }
+
+        /// <summary>
+        /// Applied to two values of the same type which have an ordering defined upon them, returns the minimum of the two elements according to the operator <=. 
+        /// </summary>
+        public static A Min<A>(this A x, A y) where A : IComparable<A>
+        {
+            return x.CompareTo(y) > 0 ? y : x;
         }
 
         private static IEnumerable<A> AppendFront<A>(A first, IEnumerable<A> xxs)
