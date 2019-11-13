@@ -226,6 +226,15 @@ namespace System.Prelude
         }
 
         /// <summary>
+        /// Applied to an integral argument, returns True if the argument is odd, and False otherwise. 
+        /// </summary>
+        public static bool Odd(this int n)
+        {
+            // odd = not . even
+            return Not(Even(n));
+        }
+
+        /// <summary>
         /// Applied to a predicate and a list, removes elements from the front of the list while the predicate is satisfied. 
         /// </summary>
         public static IEnumerable<A> DropWhile<A>(this IEnumerable<A> xs, Func<A, bool> p)
