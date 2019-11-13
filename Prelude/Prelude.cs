@@ -406,8 +406,11 @@ namespace System.Prelude
         /// <summary>
         ///  Applied to two values of the same type which have an ordering defined upon them, returns the maximum of the two elements according to the operator >=. 
         /// </summary>
-        public static A Max<A>(this A x, A y) where A : IComparable
+        public static A Max<A>(this A x, A y) where A : IComparable<A>
         {
+            // max x y
+            // | x >= y = x
+            // | otherwise = y
             return x.CompareTo(y) > 0 ? x : y;
         }
 
@@ -416,7 +419,28 @@ namespace System.Prelude
         /// </summary>
         public static A Min<A>(this A x, A y) where A : IComparable<A>
         {
+            // min x y
+            // | x <= y = x
+            // | otherwise = y
             return x.CompareTo(y) > 0 ? y : x;
+        }
+
+        /// <summary>
+        /// Applied to a non--empty list whose elements have an ordering defined upon them, returns the minimum element of the list. 
+        /// </summary>
+        public static A Minimum<A>(this IEnumerable<A> xs) where A : IComparable<A>
+        {
+            // maximum xs = foldl1 max xs
+            return Foldl1(xs, Min);
+        }
+
+        /// <summary>
+        /// Applied to a non--empty list whose elements have an ordering defined upon them, returns the maximum element of the list. 
+        /// </summary>
+        public static A Maximum<A>(this IEnumerable<A> xs) where A : IComparable<A>
+        {
+            // minimum xs = foldl1 min xs
+            return Foldl1(xs, Max);
         }
 
         private static IEnumerable<A> AppendFront<A>(A first, IEnumerable<A> xxs)
