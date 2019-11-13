@@ -249,7 +249,7 @@ namespace System.Prelude
         /// <summary>
         /// Applied to a value and a list returns True if the value is in the list and False otherwise. The elements of the list must be of the same type as the value. 
         /// </summary>
-        public static bool Elem<A>(this IEnumerable<A> xs, A x)
+        public static bool Elem<A>(this A x, IEnumerable<A> xs)
         {
             // elem x xs = any (== x) xs
             return Any(xs, (s) => s.Equals(x));
@@ -441,6 +441,14 @@ namespace System.Prelude
         {
             // minimum xs = foldl1 min xs
             return Foldl1(xs, Max);
+        }
+
+        /// <summary>
+        /// Returns True if its first argument is not an element of the list as its second argument. 
+        /// </summary>
+        public static bool NotElem<A>(this A x, IEnumerable<A> xs)
+        {
+            return Not(Elem(x, xs));
         }
 
         private static IEnumerable<A> AppendFront<A>(A first, IEnumerable<A> xxs)
