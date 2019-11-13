@@ -1,7 +1,7 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace System.Prelude.Test
+namespace System.Prelude.Tests
 {
     public class BreakTests
     {

@@ -366,6 +366,17 @@ namespace System.Prelude
             return (x == 0 || y == 0) ? 0 : Abs((x / GCD(x, y) * y));
         }
 
+        /// <summary>
+        /// Returns the number of elements in a finite list. 
+        /// </summary>
+        public static int Length<A>(this IEnumerable<A> xxs)
+        {
+            // length [] = 0
+            // length (x:xs) = 1 + length xs
+            if(IsEmpty(xxs)) return 0;
+            return 1 + Length(Tail(xxs));
+        }
+
         private static IEnumerable<A> AppendFront<A>(A first, IEnumerable<A> xxs)
         {
             yield return first;

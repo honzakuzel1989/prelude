@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace System.Prelude.Test
+namespace System.Prelude.Tests
 {
     public class HeadTests
     {
