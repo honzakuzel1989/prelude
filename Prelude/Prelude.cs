@@ -451,6 +451,16 @@ namespace System.Prelude
             return Not(Elem(x, xs));
         }
 
+        /// <summary>
+        /// Returns True if its argument is the empty list ([]) and False otherwise. 
+        /// </summary>
+        public static bool Null<A>(this IEnumerable<A> xs)
+        {
+            // null [] = True
+            // null (_:_) = False
+            return IsEmpty(xs);
+        }
+
         private static IEnumerable<A> AppendFront<A>(A first, IEnumerable<A> xxs)
         {
             yield return first;
