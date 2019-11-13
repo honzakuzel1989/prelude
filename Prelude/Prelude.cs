@@ -470,6 +470,11 @@ namespace System.Prelude
             return IsEmpty(xs);
         }
 
+        public static IEnumerable<A> Repeat<A>(this A x)
+        {
+            while(true) yield return x;
+        }
+
         private static IEnumerable<A> AppendFront<A>(A first, IEnumerable<A> xxs)
         {
             yield return first;
