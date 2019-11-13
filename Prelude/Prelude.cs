@@ -377,6 +377,32 @@ namespace System.Prelude
             return 1 + Length(Tail(xxs));
         }
 
+        /// <summary>
+        /// Applied to a list of characters containing newlines, returns a list of lists by breaking the original list into lines using the newline character as a delimiter. The newline characters are removed from the result. 
+        /// </summary>
+        public static IEnumerable<string> Lines(this string xxs)
+        {
+            // lines [] = []
+            // lines (x:xs)
+            // = l : ls
+            // where
+            // (l, xs') = break (== '\n') (x:xs)
+            // ls
+            //     | xs' == [] = []
+            //     | otherwise = lines (tail xs')
+            if(IsEmpty(xxs)) yield break;
+
+            var (l, xs) = Break(xxs, c => c == '\n');
+            yield return string.Join(string.Empty, l);
+            
+            if(IsEmpty(xs)) yield break;
+            else 
+            {
+                foreach (var ll in Lines(string.Join(string.Empty, xs.Skip(1))))
+                    yield return ll;
+            }
+        }
+
         private static IEnumerable<A> AppendFront<A>(A first, IEnumerable<A> xxs)
         {
             yield return first;
