@@ -9,7 +9,7 @@ namespace System.Prelude.Tests
         public void IterateTest()
         {
             var xs = new bool[]{true, false};
-            Assert.That(1.Iterate(x => x + 1).Take(10), Is.EqualTo(Enumerable.Range(1, 10)));
+            Assert.That(Enumerable.Take(1.Iterate(x => x + 1), 10), Is.EqualTo(Enumerable.Range(1, 10)));
         }
     }
 }

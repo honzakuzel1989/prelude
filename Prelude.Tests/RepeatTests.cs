@@ -8,7 +8,7 @@ namespace System.Prelude.Tests
         [Test]
         public void RepeatTest()
         {
-            Assert.That(5.Repeat().Take(10), Is.EqualTo(Enumerable.Repeat(5, 10)));
+            Assert.That(Enumerable.Take(5.Repeat(), 10), Is.EqualTo(Enumerable.Repeat(5, 10)));
         }
     }
 }

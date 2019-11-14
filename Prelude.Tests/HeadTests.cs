@@ -10,5 +10,12 @@ namespace System.Prelude.Tests
             var xs = new int[]{1, -2, 3, -4, 5};
             Assert.That(xs.Head(), Is.EqualTo(1));
         }
+
+        [Test]
+        public void HeadEmptyListTest()
+        {
+            var xs = new int[]{};
+            Assert.That(() => xs.Head(), Throws.InstanceOf<PreludeException>());
+        }
     }
 }

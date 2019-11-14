@@ -37,7 +37,7 @@ namespace System.Prelude
         {
             // foldr1 f [x] = x
             // foldr1 f (x:xs) = f x (foldr1 f xs)
-            if(!IsLongestThan(xs, 1)) return xs.ElementAt(0); else return f(Head(xs), Foldr1(xs.Tail(), f));
+            if(!IsLongestThan(xs, 1)) return Head(xs); else return f(Head(xs), Foldr1(xs.Tail(), f));
         }
 
         /// <summary>
@@ -65,7 +65,8 @@ namespace System.Prelude
         public static A Head<A>(this IEnumerable<A> xs)
         {
             // head (x:_) = x
-            return xs.First();
+            foreach (var x in xs) return x;
+            throw new PreludeException("Head: empty list");
         }
 
         /// <summary>
@@ -74,7 +75,9 @@ namespace System.Prelude
         public static IEnumerable<A> Tail<A>(this IEnumerable<A> xs)
         {
             // tail (_:xs) = xs
-            return xs.Skip(1);
+            int cnt = 0;
+            foreach (var x in xs) if (++cnt > 1)  yield return x;
+            if(cnt < 1) throw new PreludeException("Tail: empty list");
         }
 
         /// <summary>
@@ -211,7 +214,7 @@ namespace System.Prelude
             // drop n (_:xs) | n>0  = drop (n-1) xs
             // drop _ _             = error "PreludeList.drop: negative argument"
             if(n == 0) return xs;
-            if(IsEmpty(xs)) return Enumerable.Empty<A>();
+            if(IsEmpty(xs)) return new A[]{};
             if(n > 0) return xs.Skip(n);
             throw new PreludeException("Drop: negative argument");
         }
