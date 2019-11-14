@@ -581,6 +581,43 @@ namespace System.Prelude
             else throw new PreludeException("SplitAt: negative argument");
         }
 
+        /// <summary>
+        /// Converts an uppercase alphabetic character to a lowercase alphabetic character. If this function is applied to an argument which is not uppercase the result will be the same as the argument unchanged. [Import from Data.Char]
+        /// </summary>
+        public static char ToLower(this char c)
+        {
+            // toLower c
+            //   | isUpper c = toEnum (fromEnum c - fromEnum 'A' + fromEnum 'a')
+            //   | otherwise = c
+            return IsUpper(c) ? (char)(c - 'A' + 'a') : c;
+        }
+
+        /// <summary>
+        /// Applied to a character argument, returns True if the character is a lower case alphabetic, and False otherwise. [Import from Data.Char]
+        /// </summary>
+        public static bool IsLower(this char c)
+        {
+            // isLower c = c >= 'a' && c <= 'z'
+            return c >= 'a' && c <= 'z';
+        }
+
+        /// <summary>
+        /// Converts a lowercase alphabetic character to an uppercase alphabetic character. If this function is applied to an argument which is not lowercase the result will be the same as the argument unchanged. [Import from Data.Char]
+        /// </summary>
+        public static char ToUpper(this char c)
+        {
+            // toUpper c
+            //   | isLower c = toEnum (fromEnum c - fromEnum 'a' + fromEnum 'A')
+            //   | otherwise = ctoUpper c  
+            return IsLower(c) ? (char)(c - 'a' + 'A') : c;
+        }
+
+        public static bool IsUpper(this char c)
+        {
+            // isUpper c = c >= 'A' && c <= 'Z'
+            return c >= 'A' && c <= 'Z';
+        }
+
         private static IEnumerable<A> AppendFront<A>(A first, IEnumerable<A> xxs)
         {
             yield return first;
