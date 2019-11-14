@@ -612,10 +612,25 @@ namespace System.Prelude
             return IsLower(c) ? (char)(c - 'a' + 'A') : c;
         }
 
+        /// <summary>
+        /// Applied to a character argument, returns True if the character is an upper case alphabetic, and False otherwise. [Import from Data.Char]
+        /// </summary>
         public static bool IsUpper(this char c)
         {
             // isUpper c = c >= 'A' && c <= 'Z'
             return c >= 'A' && c <= 'Z';
+        }
+
+        /// <summary>
+        /// Converts a list of strings into a single string, placing a newline character between each of them. It is the converse of the function lines.
+        /// </summary>
+        public static string Unlines(this IEnumerable<string> xs)
+        {
+            // unlines xs
+            // = concat (map addNewLine xs)
+            // where
+            // addNewLine l = l ++ "\n"
+            return string.Join(string.Empty, Concat(Map(xs, a => a + Environment.NewLine)));
         }
 
         private static IEnumerable<A> AppendFront<A>(A first, IEnumerable<A> xxs)
