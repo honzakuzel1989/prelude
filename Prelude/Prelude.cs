@@ -510,6 +510,18 @@ namespace System.Prelude
         }
 
         /// <summary>
+        /// Applied to a predicate and a list, returns a list containing elements from the front of the list while the predicate is satisfied.
+        /// </summary>
+        public static IEnumerable<A> TakeWhile<A>(this IEnumerable<A> xs, Func<A, bool> p)
+        {   	
+            // takeWhile p [] = []
+            // takeWhile p (x:xs)
+            // | p x = x : takeWhile p xs
+            // | otherwise = []
+            foreach (var x in xs) if(p(x)) yield return x; else break;
+        }
+
+        /// <summary>
         /// Given an integer (positive or zero) and a value, returns a list containing the specified number of instances of that value. 
         /// </summary>
         public static IEnumerable<A> Reverse<A>(this IEnumerable<A> xs)
