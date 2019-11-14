@@ -470,8 +470,14 @@ namespace System.Prelude
             return IsEmpty(xs);
         }
 
+        /// <summary>
+        /// Given a value, returns an infinite list of elements the same as the value. 
+        /// </summary>
         public static IEnumerable<A> Repeat<A>(this A x)
         {
+            // repeat x
+            // = xs
+            // where xs = x:xs
             while(true) yield return x;
         }
 
