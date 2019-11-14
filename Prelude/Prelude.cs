@@ -527,6 +527,24 @@ namespace System.Prelude
             return x.ToString();
         }
 
+        /// <summary>
+        /// Sorts its argument list in ascending order. The items in the list must be in the class Ord. [Import from Data.List] 
+        /// </summary>
+        public static IEnumerable<A> Sort<A>(this IEnumerable<A> xs)
+        {
+            var len = xs.Length();
+            var xsa = new A[len];
+
+            // Copy array
+            int cnt = 0;
+            foreach (var x in xs)
+                xsa[cnt++] = x;
+
+            // Sort array in ascending order - Quicksort algorithm.
+            Array.Sort(xsa);
+            return xsa;
+        }
+
         private static IEnumerable<A> AppendFront<A>(A first, IEnumerable<A> xxs)
         {
             yield return first;
