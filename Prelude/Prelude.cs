@@ -545,6 +545,30 @@ namespace System.Prelude
             return xsa;
         }
 
+        /// <summary>
+        /// Given an integer (positive or zero) and a list, splits the list into two lists (returned as a tuple) at the position corresponding to the given integer. If the integer is greater than the length of the list, it returns a tuple containing the entire list as its first element and the empty list as its second element. 
+        /// </summary>
+        public static (IEnumerable<A>, IEnumerable<A>) SplitAt<A>(this IEnumerable<A> xs, int n)
+        {
+            // splitAt 0 xs = ([],xs)
+            // splitAt _ [] = ([],[])
+            // splitAt n (x:xs)
+            // | n > 0 = (x:xs',xs'')
+            //     where
+            //     (xs',xs'') = splitAt (n-1) xs
+            // splitAt _ _ = error "PreludeList.splitAt: negative argument"
+            if(n == 0) return (Enumerable.Empty<A>(), xs);
+            else if(IsEmpty(xs)) return (Enumerable.Empty<A>(), Enumerable.Empty<A>());
+            else if(n > 0)
+            {
+                // (xs',xs'') = splitAt (n-1) xs
+                var (xs1, xs2) =  SplitAt(Tail(xs), n - 1);
+                // (x:xs',xs'')
+                return (AppendFront(Head(xs), xs1), xs2);
+            }
+            else throw new PreludeException("SplitAt: negative argument");
+        }
+
         private static IEnumerable<A> AppendFront<A>(A first, IEnumerable<A> xxs)
         {
             yield return first;

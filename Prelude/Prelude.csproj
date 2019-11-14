@@ -58,6 +58,7 @@
         Reverse
         Show
         Sort
+        SplitAt
 
       Use only these functions can be useful for production code or like exercise for work with functions and composition of functions.
     </Description>
