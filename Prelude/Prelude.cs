@@ -515,7 +515,16 @@ namespace System.Prelude
         public static IEnumerable<A> Reverse<A>(this IEnumerable<A> xs)
         {
             // reverse = foldl (flip (:)) []
-            return Foldl(xs, (a, b) => Flip(AppendFront, a, b) , Enumerable.Empty<A>());
+            return Foldl(xs, (x, y) => Flip(AppendFront, x, y) , Enumerable.Empty<A>());
+        }
+
+        /// <summary>
+        /// Converts a value, to its string representation. 
+        /// </summary>
+        public static string Show<A>(this A x)
+        {
+            // defined internally
+            return x.ToString();
         }
 
         private static IEnumerable<A> AppendFront<A>(A first, IEnumerable<A> xxs)
