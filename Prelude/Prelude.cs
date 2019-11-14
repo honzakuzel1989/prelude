@@ -509,6 +509,15 @@ namespace System.Prelude
             throw new PreludeException("Take: negative argument");
         }
 
+        /// <summary>
+        /// Given an integer (positive or zero) and a value, returns a list containing the specified number of instances of that value. 
+        /// </summary>
+        public static IEnumerable<A> Reverse<A>(this IEnumerable<A> xs)
+        {
+            // reverse = foldl (flip (:)) []
+            return Foldl(xs, (a, b) => Flip(AppendFront, a, b) , Enumerable.Empty<A>());
+        }
+
         private static IEnumerable<A> AppendFront<A>(A first, IEnumerable<A> xxs)
         {
             yield return first;
