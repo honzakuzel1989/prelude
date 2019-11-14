@@ -481,6 +481,31 @@ namespace System.Prelude
             while(true) yield return x;
         }
 
+        /// <summary>
+        /// Given an integer (positive or zero) and a value, returns a list containing the specified number of instances of that value. 
+        /// </summary>
+        public static IEnumerable<A> Replicate<A>(this A x, int n)
+        {
+            // replicate n x = take n (repeat x)
+            return Take(Repeat(x), n);
+        }
+
+        /// <summary>
+        /// Applied to an integer (positive or zero) and a list, returns the specified number of elements from the front of the list. If the list has less than the required number of elements, take returns the entire list. 
+        /// </summary>
+        public static IEnumerable<A> Take<A>(this IEnumerable<A> xs, int n)
+        {
+            // take 0 _ = []
+            // take _ []= []
+            // take n (x:xs)
+            // | n > 0 = x : take (n-1) xs
+            // take _ _ = error "PreludeList.take: negative argument"
+            if(n == 0) return Enumerable.Empty<A>();
+            else if(IsEmpty(xs)) return Enumerable.Empty<A>();
+            else if(n > 0) return AppendFront(Head(xs), Take(Tail(xs), n - 1));
+            throw new PreludeException("Take: negative argument");
+        }
+
         private static IEnumerable<A> AppendFront<A>(A first, IEnumerable<A> xxs)
         {
             yield return first;

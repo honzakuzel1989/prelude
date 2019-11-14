@@ -53,10 +53,12 @@
         Null
         Odd
         Repeat
+        Replicate
+        Take
 
       Use only these functions can be useful for production code or like exercise for work with functions and composition of functions.
     </Description>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageProjectUrl>http://www.cse.chalmers.se/edu/course/TDA555/tourofprelude.html</PackageProjectUrl>
     <IconUrl>http://www.cse.chalmers.se/edu/course/TDA555/P/Haskell-Logo.svg</IconUrl>
     <Copyright>Copyright ©2019</Copyright>
