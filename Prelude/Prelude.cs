@@ -682,9 +682,36 @@ namespace System.Prelude
         /// </summary>
         public static bool IsSpace(this char c)
         {
-        // isSpace c  = c == ' '  || c == '\t' || c == '\n' ||
-        //              c == '\r' || c == '\f' || c == '\v'
-        return c == ' '  || c == '\t' || c == '\n' || c == '\r' || c == '\f' || c == '\v';
+            // isSpace c  = c == ' '  || c == '\t' || c == '\n' ||
+            //              c == '\r' || c == '\f' || c == '\v'
+            return c == ' '  || c == '\t' || c == '\n' || c == '\r' || c == '\f' || c == '\v';
+        }
+
+        /// <summary>
+        /// Applied to a binary function and two lists, returns a list containing elements formed be applying the function to corresponding elements in the lists. 
+        /// </summary>
+        public static IEnumerable<C> ZipWith<A, B, C>(this IEnumerable<A> a, IEnumerable<B> b, Func<A, B, C> f)
+        {
+            // zipWith z (a:as) (b:bs) = z a b : zipWith z as bs
+            // zipWith _ _ _ = []
+            if(IsEmpty(a) || IsEmpty(b)) return Empty<C>();
+
+            var (ax, axs) = (Head(a), Tail(a));
+            var (bx, bxs) = (Head(b), Tail(b));
+
+            return AppendFront(f(ax, bx), ZipWith(axs, bxs, f));
+        }
+        
+        /// <summary>
+        /// Applied to a binary function and two lists, returns a list containing elements formed be applying the function to corresponding elements in the lists. 
+        /// </summary>
+        public static IEnumerable<(A, B)> Zip<A, B>(this IEnumerable<A> a, IEnumerable<B> b)
+        {
+            // zip xs ys
+            //   = zipWith pair xs ys
+            //   where
+            //   pair x y = (x, y)
+            return ZipWith(a, b, (x, y) => (x, y));
         }
 
         private static IEnumerable<A> Empty<A>()
