@@ -405,12 +405,12 @@ namespace System.Prelude
             if(IsEmpty(xxs)) yield break;
 
             var (l, xs) = Break(xxs, c => c == '\n');
-            yield return string.Join(string.Empty, l);
+            yield return string.Concat(l);
 
             if(IsEmpty(xs)) yield break;
             else 
             {
-                foreach (var ll in Lines(string.Join(string.Empty, Tail(xs))))
+                foreach (var ll in Lines(string.Concat(Tail(xs))))
                     yield return ll;
             }
         }
@@ -630,11 +630,11 @@ namespace System.Prelude
             // = concat (map addNewLine xs)
             // where
             // addNewLine l = l ++ "\n"
-            return string.Join(string.Empty, Concat(Map(xs, a => a + '\n')));
+            return string.Concat(Concat(Map(xs, a => a + '\n')));
         }
 
         /// <summary>
-        /// 
+        /// Given a predicate, a unary function and a value, it recursively re--applies the function to the value until the predicate is satisfied. If the predicate is never satisfied until will not terminate. 
         /// </summary>
         public static A Until<A>(this A x, Func<A, bool> p, Func<A, A> f)
         {
@@ -644,6 +644,48 @@ namespace System.Prelude
             return p(x) ? x : Until(f(x), p, f);
         }
 
+        /// <summary>
+        /// Concatenates a list of strings into a single string, placing a single space between each of them. 
+        /// </summary>
+        public static string Unwords(this IEnumerable<string> xs)
+        {
+            // unwords [] = []
+            // unwords ws
+            //   = foldr1 addSpace ws
+            //   where
+            //   addSpace w s = w ++ (' ':s)
+            return IsEmpty(xs) ? string.Empty : Foldr1(xs, (w, s) => w + ' ' + s);
+        }
+
+        /// <summary>
+        /// Breaks its argument string into a list of words such that each word is delimited by one or more whitespace characters. 
+        /// </summary>
+        public static IEnumerable<string> Words(this string s)
+        {
+            // words s
+            //   | findSpace == [] = []
+            //   | otherwise = w : words s''
+            //   where
+            //   (w, s'') = break isSpace findSpace
+            //   findSpace = dropWhile isSpace s
+            Func<string, IEnumerable<char>> findSpace = x => DropWhile(x, IsSpace);
+            if(IsEmpty(findSpace(s))) return Empty<string>();
+            else
+            {
+                var (w, s2) = Break(findSpace(s), IsSpace);
+                return AppendFront(string.Concat(w), Words(string.Concat(s2)));
+            }
+        }
+
+        /// <summary>
+        /// Returns True if its character argument is a whitespace character and False otherwise. [Import from Data.Char] 
+        /// </summary>
+        public static bool IsSpace(this char c)
+        {
+        // isSpace c  = c == ' '  || c == '\t' || c == '\n' ||
+        //              c == '\r' || c == '\f' || c == '\v'
+        return c == ' '  || c == '\t' || c == '\n' || c == '\r' || c == '\f' || c == '\v';
+        }
 
         private static IEnumerable<A> Empty<A>()
         {
