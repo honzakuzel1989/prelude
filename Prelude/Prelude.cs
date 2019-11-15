@@ -633,6 +633,18 @@ namespace System.Prelude
             return string.Join(string.Empty, Concat(Map(xs, a => a + '\n')));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public static A Until<A>(this A x, Func<A, bool> p, Func<A, A> f)
+        {
+            // until p f x
+            //   | p x = x
+            //   | otheriwise = until p f (f x)
+            return p(x) ? x : Until(f(x), p, f);
+        }
+
+
         private static IEnumerable<A> Empty<A>()
         {
             yield break;
