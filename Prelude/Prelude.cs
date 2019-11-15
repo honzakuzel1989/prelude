@@ -149,7 +149,7 @@ namespace System.Prelude
                 if(p(x)) { satisfied.Add(x); skip++; }
                 else return (satisfied, xs.Skip(skip));
             }
-            return (satisfied, Enumerable.Empty<A>());
+            return (satisfied, Empty<A>());
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace System.Prelude
         public static IEnumerable<A> Concat<A>(this IEnumerable<IEnumerable<A>> xs)
         {
             // concat xs = foldr (++) [] xs
-            return Foldr<IEnumerable<A>, IEnumerable<A>>(xs, Enumerable.Concat, Enumerable.Empty<A>());
+            return Foldr<IEnumerable<A>, IEnumerable<A>>(xs, Concat, Empty<A>());
         }
 
         /// <summary>
@@ -343,7 +343,7 @@ namespace System.Prelude
         {
             // init [x] = []
             // init (x:xs) = x : init xs
-            if(!IsLongestThan(xxs, 1)) return Enumerable.Empty<A>(); else return AppendFront(Head(xxs), Init(Tail(xxs)));
+            if(!IsLongestThan(xxs, 1)) return Empty<A>(); else return AppendFront(Head(xxs), Init(Tail(xxs)));
         }
 
         /// <summary>
@@ -410,7 +410,7 @@ namespace System.Prelude
             if(IsEmpty(xs)) yield break;
             else 
             {
-                foreach (var ll in Lines(string.Join(string.Empty, xs.Skip(1))))
+                foreach (var ll in Lines(string.Join(string.Empty, Tail(xs))))
                     yield return ll;
             }
         }
@@ -503,8 +503,8 @@ namespace System.Prelude
             // take n (x:xs)
             // | n > 0 = x : take (n-1) xs
             // take _ _ = error "PreludeList.take: negative argument"
-            if(n == 0) return Enumerable.Empty<A>();
-            else if(IsEmpty(xs)) return Enumerable.Empty<A>();
+            if(n == 0) return Empty<A>();
+            else if(IsEmpty(xs)) return Empty<A>();
             else if(n > 0) return AppendFront(Head(xs), Take(Tail(xs), n - 1));
             throw new PreludeException("Take: negative argument");
         }
@@ -527,7 +527,7 @@ namespace System.Prelude
         public static IEnumerable<A> Reverse<A>(this IEnumerable<A> xs)
         {
             // reverse = foldl (flip (:)) []
-            return Foldl(xs, (x, y) => Flip(AppendFront, x, y) , Enumerable.Empty<A>());
+            return Foldl(xs, (x, y) => Flip(AppendFront, x, y) , Empty<A>());
         }
 
         /// <summary>
@@ -569,8 +569,8 @@ namespace System.Prelude
             //     where
             //     (xs',xs'') = splitAt (n-1) xs
             // splitAt _ _ = error "PreludeList.splitAt: negative argument"
-            if(n == 0) return (Enumerable.Empty<A>(), xs);
-            else if(IsEmpty(xs)) return (Enumerable.Empty<A>(), Enumerable.Empty<A>());
+            if(n == 0) return (Empty<A>(), xs);
+            else if(IsEmpty(xs)) return (Empty<A>(), Empty<A>());
             else if(n > 0)
             {
                 // (xs',xs'') = splitAt (n-1) xs
@@ -630,25 +630,36 @@ namespace System.Prelude
             // = concat (map addNewLine xs)
             // where
             // addNewLine l = l ++ "\n"
-            return string.Join(string.Empty, Concat(Map(xs, a => a + Environment.NewLine)));
+            return string.Join(string.Empty, Concat(Map(xs, a => a + '\n')));
         }
 
-        private static IEnumerable<A> AppendFront<A>(A first, IEnumerable<A> xxs)
+        private static IEnumerable<A> Empty<A>()
+        {
+            yield break;
+        }
+
+        private static IEnumerable<A> Concat<A>(IEnumerable<A> first, IEnumerable<A> second)
+        {
+            foreach (var x in first) yield return x;
+            foreach (var x in second) yield return x;
+        }
+
+        private static IEnumerable<A> AppendFront<A>(A first, IEnumerable<A> xs)
         {
             yield return first;
-            foreach (var x in xxs) yield return x;
+            foreach (var x in xs) yield return x;
         }
 
-        private static bool IsEmpty<A>(IEnumerable<A> xxs)
+        private static bool IsEmpty<A>(IEnumerable<A> xs)
         {
-            foreach (var _ in xxs) return false;
+            foreach (var _ in xs) return false;
             return true;
         }
 
-        private static bool IsLongestThan<A>(IEnumerable<A> xxs, uint length, uint minimalLength = 1)
+        private static bool IsLongestThan<A>(IEnumerable<A> xs, uint length, uint minimalLength = 1)
         {
             int counter = 0;
-            foreach (var _ in xxs)
+            foreach (var _ in xs)
             {
                 if(++counter > length)
                     return true;
