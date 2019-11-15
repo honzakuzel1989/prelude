@@ -931,18 +931,21 @@ namespace System.Prelude
         /// <summary>
         /// Takes a string as an argument and returns an I/O action as a result. A side-effect of applying putStr is that it causes its argument string to be printed to the screen. 
         /// </summary>
-        public static Text.StringBuilder PutStr(this string s, Text.StringBuilder sb)
+        public static Text.StringBuilder PutStr(this string s, Text.StringBuilder sb = null)
         {
-            if(sb == null) sb = new Text.StringBuilder();
+            if(sb == null) 
+                sb = new Text.StringBuilder();
+
             Console.Write(s);
             sb.Append(s);
+            
             return sb;
         }
 
         /// <summary>
         /// Takes a value of any type in the Show class as an argument and returns an I/O action as a result. A side-effect of applying print is that it causes its argument value to be printed to the screen. 
         /// </summary>
-        public static Text.StringBuilder Print<A>(this A s, Text.StringBuilder sb)
+        public static Text.StringBuilder Print<A>(this A s, Text.StringBuilder sb = null)
         {
             // print x = putStrLn (show x) 
             return PutStr(Show(s), sb);
