@@ -781,6 +781,14 @@ namespace System.Prelude
         }
 
         /// <summary>
+        /// The trigonometric function tan, arguments are interpreted to be in radians. 
+        /// </summary>
+        public static double Tan<A>(this double x)
+        {
+            return System.Math.Tan(x);
+        }
+
+        /// <summary>
         /// Returns the smallest integer not less than its argument. 
         /// </summary>
         public static int Ceiling<A>(this double x)
@@ -910,6 +918,14 @@ namespace System.Prelude
         public static double Log(this double x)
         {
             return System.Math.Log(x);
+        }
+
+        /// <summary>
+        /// Drops the fractional part of a floating point number, returning only the integral part. 
+        /// </summary>
+        public static int Truncate(this double x)
+        {
+            return (int)System.Math.Truncate(x);
         }
 
         /// <summary>

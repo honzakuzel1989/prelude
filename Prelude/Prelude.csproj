@@ -90,6 +90,7 @@
         Quot
         Sin
         Sum
+        Truncate
       
       Implemented like:
         Extensions - the most significant param is extended and, of course, the first one (usually the enumerator of something)
@@ -101,14 +102,14 @@
         Print and PutStr have additional parameter StringBuilder which return after write
 
       Implementation details:
-        The mathematical functions like sin, cos, .. are easyilly implemented using System.Math
+        The mathematical functions like sin, cos, .. are easyilly implemented using System.Math and was not tested
         The class use nothing more then System library and Ienumerable interface
         The numerict functions are supported only for int and double (Sum, Product)
 
       Not implemented:
         pred
         succ
-
+        undefined
 
       Use only these functions can be useful for production code or like exercise for work with functions and composition of functions.
     </Description>
