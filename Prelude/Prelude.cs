@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 
-using static System.Math;
-
 namespace System.Prelude
 {
     /// <summary>
@@ -10,6 +8,25 @@ namespace System.Prelude
     /// </summary>
     public static class Prelude
     {
+        /// <summary>
+        /// Returns the absolute value of a integer number. 
+        /// </summary>
+        public static int Abs(this int x)
+        {
+            return (int)Abs((double)x); 
+        }
+
+        /// <summary>
+        /// Returns the absolute value of a real number. 
+        /// </summary>
+        public static double Abs(this double x)
+        {
+            // abs x
+            //   | x >= 0 = x
+            //   | otherwise = -x
+            return x >= 0 ? x : -x;
+        }
+
         /// <summary>
         /// Given a function, and a list of any type, returns a list where each element is the result of applying the function to the corresponding element in the input list.
         /// </summary>

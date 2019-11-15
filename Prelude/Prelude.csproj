@@ -9,6 +9,7 @@
     <Description>
       The well-tested analogy for part of very usefull Haskell's basic functions library created in C#.
       
+        Abs
         Map
         Foldr
         Foldr1
