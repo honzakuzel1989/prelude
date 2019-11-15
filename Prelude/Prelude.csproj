@@ -110,6 +110,7 @@
         pred
         succ
         undefined
+        operators - it is not posible define or redefine properly (you have to use standard C# operators)
 
       Use only these functions can be useful for production code or like exercise for work with functions and composition of functions.
     </Description>
