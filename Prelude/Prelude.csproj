@@ -88,6 +88,8 @@
         Product
         Rem
         Quot
+        Sin
+        Sum
       
       Implemented like:
         Extensions - the most significant param is extended and, of course, the first one (usually the enumerator of something)
@@ -101,7 +103,7 @@
       Implementation details:
         The mathematical functions like sin, cos, .. are easyilly implemented using System.Math
         The class use nothing more then System library and Ienumerable interface
-        The numerict functions are supported only for int and double
+        The numerict functions are supported only for int and double (Sum, Product)
 
       Not implemented:
         pred

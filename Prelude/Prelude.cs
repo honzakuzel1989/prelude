@@ -9,6 +9,23 @@ namespace System.Prelude
     public static class Prelude
     {
         /// <summary>
+        /// Computes the sum of a finite list of double numbers. 
+        /// </summary>
+        public static int Sum(this IEnumerable<int> xs)
+        {
+            return (int)Sum(Map(xs, a => (double)a));
+        }
+
+        /// <summary>
+        /// Computes the sum of a finite list of integer numbers. 
+        /// </summary>
+        public static double Sum(this IEnumerable<double> xs)
+        {
+            // product xs = foldl (*) 1 xs
+            return Foldl(xs, (a, b) => a + b, 0.0);
+        }
+
+        /// <summary>
         /// Applied to a list of integer numbers, returns their product. 
         /// </summary>
         public static int Product(this IEnumerable<int> xs)
@@ -774,9 +791,17 @@ namespace System.Prelude
         /// <summary>
         /// The trigonometric cosine function, arguments are interpreted to be in radians. 
         /// </summary>
-        public static int Cos<A>(this double x)
+        public static double Cos(this double x)
         {
-            return (int)System.Math.Cos(x);
+            return System.Math.Cos(x);
+        }
+
+        /// <summary>
+        /// The trigonometric sine function, arguments are interpreted to be in radians. 
+        /// </summary>
+        public static double Sin(this double x)
+        {
+            return System.Math.Sin(x);
         }
 
         /// <summary>
