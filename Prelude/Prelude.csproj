@@ -112,26 +112,8 @@
         undefined
         operators - it is not posible define or redefine properly (you have to use standard C# operators)
 
-      Example:
-        Not really QuickSort in Haskell
-
-          qsort []     = []
-          qsort (x:xs) = qsort (filter (lt x) xs) ++ [x] ++ qsort (filter (qe x) xs)
-
-        The same in C# using prelude
-
-          public static IEnumerable of A QuickSort of A(IEnumerable of A xs) where A : IComparable
-          {
-              return xs.Any() ? 
-                  new []{
-                      QuickSort(xs.Tail().Filter(x => x.CompareTo(xs.Head()) lt 0)),
-                      xs.Head().Replicate(1),
-                      QuickSort(xs.Tail().Filter(x => x.CompareTo(xs.Head()) qe 0))
-                  }.Concat()
-                  : Enumerable.Empty of A();
-          }
-
-      Use only these functions can be useful for production code or like exercise for work with functions and composition of functions.
+      Use only these functions can be useful for production code or like exercise for work with functions and composition of functions, 
+      but a lot of from prelude has been already implemented in System.Linq.
     </Description>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageProjectUrl>http://www.cse.chalmers.se/edu/course/TDA555/tourofprelude.html</PackageProjectUrl>
