@@ -9,6 +9,7 @@
     <Description>
       The well-tested analogy for part of very usefull Haskell's basic functions library created in C#.
       
+      Implemented:
         Abs
         Map
         Foldr
@@ -71,6 +72,41 @@
         Words
         Zip
         ZipWith
+        Atan
+        Compare
+        Cos
+        Div
+        Error
+        Exp
+        Floor
+        FromIntegral
+        IsAlpha
+        IsDigit
+        IsSpace
+        Log
+        Mod
+        Product
+        Rem
+        Quot
+      
+      Implemented like:
+        Extensions - the most significant param is extended and, of course, the first one (usually the enumerator of something)
+
+      Changes:
+        Error does not return a type
+        Compare returns same value as CompareTo (-1, 0, 1) instead Eq enum (LT, EQ, GT)
+        FromIntegral just casting int to double
+        Print and PutStr have additional parameter StringBuilder which return after write
+
+      Implementation details:
+        The mathematical functions like sin, cos, .. are easyilly implemented using System.Math
+        The class use nothing more then System library and Ienumerable interface
+        The numerict functions are supported only for int and double
+
+      Not implemented:
+        pred
+        succ
+
 
       Use only these functions can be useful for production code or like exercise for work with functions and composition of functions.
     </Description>

@@ -9,6 +9,23 @@ namespace System.Prelude
     public static class Prelude
     {
         /// <summary>
+        /// Applied to a list of integer numbers, returns their product. 
+        /// </summary>
+        public static int Product(this IEnumerable<int> xs)
+        {
+            return (int)Product(Map(xs, a => (double)a));
+        }
+
+        /// <summary>
+        /// Applied to a list of double numbers, returns their product. 
+        /// </summary>
+        public static double Product(this IEnumerable<double> xs)
+        {
+            // product xs = foldl (*) 1 xs
+            return Foldl(xs, (a, b) => a * b, 1.0);
+        }
+
+        /// <summary>
         /// Returns the absolute value of a integer number. 
         /// </summary>
         public static int Abs(this int x)
@@ -214,7 +231,7 @@ namespace System.Prelude
             // | c >= 'a' && c <= 'f' =  fromEnum c - fromEnum 'a' + 10
             // | c >= 'A' && c <= 'F' =  fromEnum c - fromEnum 'A' + 10
             // | otherwise            =  error "Char.digitToInt: not a digit"
-            return char.IsDigit(c) ? c - '0' : 
+            return IsDigit(c) ? c - '0' : 
                 ((c >= 'a' && c <= 'f') ? c - 'a' + 10 : 
                 ((c >= 'A' && c <= 'F') ? c - 'A' + 10 : 
                 throw new PreludeException("DigitToInt: not a digit")));
@@ -236,12 +253,20 @@ namespace System.Prelude
         }
 
         /// <summary>
+        /// The ratio of the circumference of a circle to its diameter. 
+        /// </summary>
+        public static double PI()
+        {
+            return System.Math.PI;
+        }
+
+        /// <summary>
         /// Applied to an integral argument, returns True if the argument is even, and False otherwise. 
         /// </summary>
         public static bool Even(this int n)
         {
             // even n = n `rem` 2 == 0
-            return n % 2 == 0;
+            return Mod(n, 2) == 0;
         }
 
         /// <summary>
@@ -340,7 +365,7 @@ namespace System.Prelude
             //             gcd' x y = gcd' y (x `rem` y)
             if(x ==0 && y == 0) throw new PreludeException("GCD: gcd 0 0 is undefined");
             if(y == 0) return x;
-            return GCD(Abs(y), Abs(x % y));
+            return GCD(Abs(y), Abs(Mod(x, y)));
         }
 
         /// <summary>
@@ -728,6 +753,158 @@ namespace System.Prelude
             //   where
             //   pair x y = (x, y)
             return ZipWith(a, b, (x, y) => (x, y));
+        }
+
+        /// <summary>
+        /// The trigonometric function inverse tan. 
+        /// </summary>
+        public static double Atan<A>(this double x)
+        {
+            return System.Math.Atan(x);
+        }
+
+        /// <summary>
+        /// Returns the smallest integer not less than its argument. 
+        /// </summary>
+        public static int Ceiling<A>(this double x)
+        {
+            return (int)System.Math.Ceiling(x);
+        }
+
+        /// <summary>
+        /// The trigonometric cosine function, arguments are interpreted to be in radians. 
+        /// </summary>
+        public static int Cos<A>(this double x)
+        {
+            return (int)System.Math.Cos(x);
+        }
+
+        /// <summary>
+        /// Applied to to values of the same type which have an ordering defined on them, returns a value of type Ordering which will be: 0 if the two values are equal; 1 if the first value is strictly greater than the second; and -1 if the first value is less than or equal to the second value. 
+        /// </summary>
+        public static int Compare<A>(this A x, A y) where A : IComparable<A>
+        {
+            // compare x y
+            //    | x == y = EQ
+            //    | x >= y = LT
+            //    | otherwise = GT
+            return x.CompareTo(y);
+        }
+
+        /// <summary>
+        /// Returns the modulus of its two arguments. 
+        /// </summary>
+        public static int Mod(this int x, int y)
+        {
+            if(y < 0) return x < 0 ? -(Abs(x % y) + y) : (Abs(x % y) + y);
+            return x % y;
+        }
+
+        /// <summary>
+        /// Computes the integer division of its integral arguments. 
+        /// </summary>
+        public static int Div(this int x, int y)
+        {
+            var ddiv = (double)x / y;
+            var idiv = (int)ddiv;
+
+            // `div` is integer division such that the result is truncated towards negative infinity. 
+            return ddiv >= 0 ? idiv : idiv - 1;
+        }
+
+        /// <summary>
+        /// Returns the quotient after dividing the its first integral argument by its second integral argument. 
+        /// </summary>
+        public static int Quot(this int x, int y)
+        {
+            return x / y;
+        }
+
+        /// <summary>
+        /// Returns the remainder after dividing its first integral argument by its second integral argument. 
+        /// </summary>
+        public static int Rem(this int x, int y)
+        {
+            // (x `quot` y)*y + (x `rem` y) == x
+            return -(Quot(x, y) * y - x);
+        }
+
+        /// <summary>
+        /// Applied to a string creates an error value with an associated message. 
+        /// </summary>
+        public static void Error(string message)
+        {
+            throw new PreludeException(message);
+        }
+
+        /// <summary>
+        /// Computes the integer division of its integral arguments. 
+        /// </summary>
+        public static double Exp(this double x)
+        {
+            return System.Math.Exp(x);
+        }
+
+        /// <summary>
+        /// Returns the largest integer not greater than its argument.
+        /// </summary>
+        public static double Floor(this double x)
+        {
+            return System.Math.Floor(x);
+        }
+
+        /// <summary>
+        /// Converts from an int to a double type. 
+        /// </summary>
+        public static double FromIntegral(this int i)
+        {
+            return (double)i;
+        }
+
+        /// <summary>
+        /// Applied to a character argument, returns True if the character is a numeral, and False otherwise. [Import from Data.Char] 
+        /// </summary>
+        public static bool IsDigit(this char c)
+        {
+            // isDigit c = c >= '0' && c <= '9'
+            return c >= '0' && c <= '9';
+        }
+
+        /// <summary>
+        /// Applied to a character argument, returns True if the character is alphabetic, and False otherwise. [Import from Data.Char] 
+        /// </summary>
+        public static bool IsAlpha(this char c)
+        {
+            // isAlpha c = isUpper c || isLower c
+            return IsUpper(c) || IsLower(c);
+        }
+
+        /// <summary>
+        /// Returns the natural logarithm of its argument. 
+        /// </summary>
+        public static double Log(this double x)
+        {
+            return System.Math.Log(x);
+        }
+
+        /// <summary>
+        /// Takes a string as an argument and returns an I/O action as a result. A side-effect of applying putStr is that it causes its argument string to be printed to the screen. 
+        /// </summary>
+        public static Text.StringBuilder PutStr(this string s, Text.StringBuilder sb)
+        {
+            if(sb == null) sb = new Text.StringBuilder();
+            Console.Write(s);
+            sb.Append(s);
+            return sb;
+        }
+
+        /// <summary>
+        /// Takes a value of any type in the Show class as an argument and returns an I/O action as a result. A side-effect of applying print is that it causes its argument value to be printed to the screen. 
+        /// </summary>
+        public static Text.StringBuilder Print<A>(this A s, Text.StringBuilder sb)
+        {
+            // print x = putStrLn (show x) 
+            return PutStr(Show(s), sb);
         }
 
         private static IEnumerable<A> Skip<A>(IEnumerable<A> xs, int n)
