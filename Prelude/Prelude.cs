@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using static System.Math;
 
@@ -147,7 +146,7 @@ namespace System.Prelude
             foreach (var x in xs)
             {
                 if(p(x)) { satisfied.Add(x); skip++; }
-                else return (satisfied, xs.Skip(skip));
+                else return (satisfied, Skip(xs, skip));
             }
             return (satisfied, Empty<A>());
         }
@@ -215,7 +214,7 @@ namespace System.Prelude
             // drop _ _             = error "PreludeList.drop: negative argument"
             if(n == 0) return xs;
             if(IsEmpty(xs)) return new A[]{};
-            if(n > 0) return xs.Skip(n);
+            if(n > 0) return Skip(xs, n);
             throw new PreludeException("Drop: negative argument");
         }
 
@@ -364,7 +363,7 @@ namespace System.Prelude
         {
             // last [x] = x
             // last (_:xs) = last xs
-            return !IsLongestThan(xxs, 1) ? xxs.ElementAt(0) : Last(Tail(xxs));
+            return !IsLongestThan(xxs, 1) ? Head(xxs) : Last(Tail(xxs));
         }
 
         /// <summary>
@@ -712,6 +711,13 @@ namespace System.Prelude
             //   where
             //   pair x y = (x, y)
             return ZipWith(a, b, (x, y) => (x, y));
+        }
+
+        private static IEnumerable<A> Skip<A>(IEnumerable<A> xs, int n)
+        {
+            if(IsEmpty(xs) || n == 0) return xs;
+            else if(n > 0) return Skip(Tail(xs), n - 1);
+            throw new PreludeException("Skip: negative number");
         }
 
         private static IEnumerable<A> Empty<A>()
